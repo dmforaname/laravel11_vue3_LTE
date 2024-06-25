@@ -11,6 +11,8 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/admin/scss/app.scss',
                 'resources/admin/js/app.js',
+                'resources/login/js/app.js',
+                'resources/login/sass/app.scss',
             ],
             refresh: true,
         }),

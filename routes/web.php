@@ -13,3 +13,7 @@ Route::get('/admin', function () {
 Route::get('/admin/{any}', function () {
     return view('layouts.admin');
 })->where('any', '.*');
+
+Route::get('/login', function () {
+    return view('layouts.login');
+})->where('any', '.*');
