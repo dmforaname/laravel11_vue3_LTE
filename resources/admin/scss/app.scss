@@ -4,3 +4,22 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback');
 @import url('../assets/css/adminlte.min.css');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
+
+.navbar-nav > .user-menu .user-image-1 {
+    border-radius: 50%;
+    float: left;
+    height: 2.1rem;
+    margin-right: 10px;
+    margin-top: -2px;
+    width: 2.1rem;
+  }
+  
+  @media (min-width: 576px) {
+    .navbar-nav > .user-menu .user-image-1 {
+      float: none;
+      line-height: 10px;
+      margin-right: .4rem;
+      margin-top: -5px;
+    }
+  }
