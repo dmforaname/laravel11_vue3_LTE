@@ -36,3 +36,13 @@ docker exec -it laravelAdmApp npm install
 ```
 docker exec -it laravelAdmApp npm run dev
 ```
+
+## Run Migration
+```
+docker exec -it laravelAdmApp php artisan migrate
+```
+
+## Run DB Seeder
+```
+docker exec -it laravelAdmApp php artisan db:seed
+```
