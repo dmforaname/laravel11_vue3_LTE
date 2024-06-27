@@ -10,3 +10,4 @@ use App\Http\Controllers\Api;
 
 
 Route::post('/login', Api\Auth\LoginController::class);
+Route::get('/refresh', Api\Auth\RefreshController::class);
