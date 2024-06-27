@@ -30,8 +30,10 @@ class LoginRequest extends FormRequest
     {
         return [
             
-            'email' => 'bail|required|string|email:rfc,dns|max:250|exists:users,email',
-            'password' => 'required|string|min:8'
+            // 'email' => 'bail|required|string|email:rfc,dns|max:250|exists:users,email',
+            'email' => 'bail|required|string|email:rfc|max:250',
+            'password' => 'bail|required|string|min:8',
+            'remember_me' => 'sometimes|required|boolean'
         ];
     }
 

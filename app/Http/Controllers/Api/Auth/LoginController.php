@@ -17,19 +17,15 @@ class LoginController extends Controller
     public function __invoke(LoginRequest $request)
     {
         $credentials = $request->only('email', 'password');
-
         $token = Auth::guard('api')->attempt($credentials);
-        
-        if (!$token) return $this->error('Unauthorized',401);
-    
         $remember_me = ($request->remember_me)? 30 : 2;
-
-        // $user = User::where('email', $request->email)->first();
+        
+        if (!$token) return $this->error('Unauthorized',401);        
 
         return $this->success([
             'token' => $token,
             'token_ttl' => Carbon::now()->addHours(7)->addDay($remember_me)->timestamp * 1000,
-            // 'keep_login' => ($request->remember_me) ? true : false
+            'keep_login' => ($request->remember_me) ? true : false
         ],'Login Successfully');
     }
 }

@@ -12,7 +12,7 @@
     <div id="app">
         <router-view></router-view>
     </div>
-
     @vite(['resources/login/js/app.js'])
+    
 </body>
 </html>
