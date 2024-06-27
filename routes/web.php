@@ -17,3 +17,7 @@ Route::get('/admin/{any}', function () {
 Route::get('/login', function () {
     return view('layouts.login');
 })->where('any', '.*');
+
+Route::get('/loggedin', function () {
+    return view('layouts.admin');
+})->where('any', '.*');

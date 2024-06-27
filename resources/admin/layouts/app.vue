@@ -1,4 +1,7 @@
 <template>
+  <!-- Preloader -->
+  <PreloaderAdm></PreloaderAdm>
+
   <!-- Navbar -->
   <NavbarAdm></NavbarAdm>
   <!-- /.navbar -->
@@ -6,9 +9,15 @@
   <SidebarAdm></SidebarAdm>
 
   <!-- Content Wrapper. Contains page content -->
-  <Transition name="fade">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <BreadcrumbAdm></BreadcrumbAdm>
+
+    <!-- Main content -->
     <router-view></router-view>
-  </Transition>
+  </div>
+
+
   <!-- /.content-wrapper -->
 
   <FooterAdm></FooterAdm>
@@ -24,12 +33,16 @@
 import SidebarAdm from './sidebarAdm.vue';
 import NavbarAdm from './navbarAdm.vue';
 import FooterAdm from './footerAdm.vue';
+import PreloaderAdm from './preloaderAdm.vue';
+import BreadcrumbAdm from './breadcrumbAdm.vue'
 
 export default {
   components: {
     SidebarAdm,
     NavbarAdm,
-    FooterAdm
+    FooterAdm,
+    PreloaderAdm,
+    BreadcrumbAdm
   },
   data() {
     return {
