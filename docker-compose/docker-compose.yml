@@ -20,7 +20,7 @@ services:
       - APP_KEY=${APP_KEY}
       - APP_DEBUG=true
       - APP_TIMEZONE=UTC
-      - APP_URL=http://localhost
+      - APP_URL=http://localhost:8028
       - APP_LOCALE=en
       - APP_FALLBACK_LOCALE=en
       - APP_FAKER_LOCALE=en_US
@@ -66,10 +66,11 @@ services:
       - AWS_BUCKET=
       - AWS_USE_PATH_STYLE_ENDPOINT=false
       - VITE_APP_NAME="${APP_NAME}"
-      - JWT_SECRET=1repidOUol0H7ETZBX3tmTYEJlHSRrtT9cCKLsE5gdS9TcyzVfLqoF8s4rXSdapn
+      - JWT_SECRET=${JWT_SECRET}
       - JWT_ALGO=HS256
       - JWT_TTL=10080
       - JWT_REFRESH_TTL=43200
+      - AUTH_GUARD=api
     volumes:
       - ../:/var/www/html/:cached
     networks:
