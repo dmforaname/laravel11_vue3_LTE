@@ -59,26 +59,26 @@ router.beforeEach((to, from, next) => {
       if (now > tokenPayload.exp * 1000) {
 
         const api_uri = import.meta.env.VITE_API_URL
+
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
+
         axios.get(`${api_uri}/refresh`)
           .then(res => {
 
             async function f() {
 
-              let newRes = res.data
-
+              let newRes = res.data.data
               localStorage.setItem('token', newRes['token'])
-
               axios.defaults.headers.common['Authorization'] = 'Bearer ' + newRes['token']
-
               return true
             }
 
             f().then(i => {
 
+              console.log('then')
               localStorage.setItem("token_ttl", now + (day * 60 * 60 * 1000))
               return next()
             })
-
 
           }).catch(err => {
             console.log("err===========", err)
