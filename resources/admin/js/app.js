@@ -24,7 +24,7 @@ router.beforeEach((to, from, next) => {
     // Remove token if exists
     if (localStorage.getItem('token_ttl')) localStorage.removeItem('token');
 
-    store.commit('login', to.query.token)
+    store.commit('login', to.query)
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + to.query.token
     return next({ path: (to.query.url) ?? '/admin' })
   }
@@ -36,7 +36,69 @@ router.beforeEach((to, from, next) => {
     script.goToLogout();
   }
 
-  return next()
+  // Check login time expired
+  if (localStorage.getItem('token_ttl')) {
+
+    const now = new Date().getTime()
+
+    if (now > localStorage.getItem('token_ttl')) {
+
+      arrStorageList.forEach(item => localStorage.removeItem(item))
+      localStorage.clear();
+      goToLogout()
+    } else {
+
+      
+      let day = (localStorage.getItem('keep_login') === true) ? 30 : 1
+      store.commit('setUserLoaded', true)
+
+      let tokenPayload = script.parseJwt(localStorage.getItem('token'))
+
+      console.log(tokenPayload.exp * 1000)
+
+      if (now > tokenPayload.exp * 1000) {
+
+        const api_uri = import.meta.env.VITE_API_URL
+        axios.get(`${api_uri}/refresh`)
+          .then(res => {
+
+            async function f() {
+
+              let newRes = res.data
+
+              localStorage.setItem('token', newRes['token'])
+
+              axios.defaults.headers.common['Authorization'] = 'Bearer ' + newRes['token']
+
+              return true
+            }
+
+            f().then(i => {
+
+              localStorage.setItem("token_ttl", now + (day * 60 * 60 * 1000))
+              return next()
+            })
+
+
+          }).catch(err => {
+            console.log("err===========", err)
+
+            arrStorageList.forEach(item => localStorage.removeItem(item))
+            localStorage.clear();
+            goToLogout()
+            // return;
+          })
+      } else {
+        localStorage.setItem("token_ttl", now + (day * 24 * 60 * 60 * 1000))
+        return next()
+      }
+
+    }
+  } else {
+    return next()
+  }
+
+  // return next()
 })
 
 const app = createApp(App)

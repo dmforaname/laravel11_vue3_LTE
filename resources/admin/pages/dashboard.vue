@@ -48,7 +48,7 @@ export default {
 
         // document.title = (this.companyTitle === '') ? this.pageTitle : this.pageTitle + ' - ' + this.companyTitle
         console.log('dashboard')
-    }
+    },
 }
 
 </script>

@@ -35,7 +35,12 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="/admin">Dashboard</a>
                                 <a class="dropdown-item" href="javascript:void(0)">Edit Profile</a>
-                                <a class="dropdown-item" href="javascript:void(0)">Log Out</a>
+                                <!-- <a class="dropdown-item" href="javascript:void(0)">Log Out</a> -->
+                                <a 
+                                @click.prevent="logout()" 
+                                class="dropdown-item" 
+                                :href=routes.logout
+                                >Logout</a>
                             </div>
                         </li>
                     </ul>
@@ -55,3 +60,30 @@
         </ul>
     </nav>
 </template>
+
+<script>
+
+
+export default {
+
+    data() {
+
+        return {
+            routes: {
+                logout: '/admin/logout'
+            },
+            arrLocalStorage: this.storageList
+        }
+    },
+    methods: {
+        logout() {
+
+            this.arrLocalStorage.forEach(item => localStorage.removeItem(item))
+            localStorage.clear();
+            axios.post(`${this.api_uri}/logout`).then(() => location.href = '/login').catch(err => {
+                location.href = '/login'
+            })
+        },
+    }
+}
+</script>

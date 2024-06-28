@@ -44,7 +44,7 @@ const store = createStore({
             // context.commit('setUserLoaded', true)
             // context.commit('setUser', { email:"dmforaname@gmail.com",is_active : true,is_admin: 1 })
 
-            // const api_uri = import.meta.env.VITE_API_URI_JWT
+            // const api_uri = import.meta.env.VITE_API_URL
 
             // axios.get(`${api_uri}/user/${id}`)
             // .then(res => {
