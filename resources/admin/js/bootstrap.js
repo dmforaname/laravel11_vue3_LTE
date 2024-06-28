@@ -15,7 +15,6 @@ try {
 
 
 import 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.bundle.min.js'
-// import '../assets/js/adminlte.min.js'
+import 'https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js';
 // import '../assets/js/demo.js'
-import '../assets/js/adminlte'
 import '../assets/js/script'
