@@ -105,7 +105,7 @@ const app = createApp(App)
 app.use(store)
 app.use(router)
 
-// app.config.globalProperties.emitter = emitter
+app.config.globalProperties.emitter = emitter
 app.config.globalProperties.storageList = arrStorageList
 
 app.mount('#app')
