@@ -40,7 +40,6 @@ export default {
     mounted() {
 
         // document.title = (this.companyTitle === '') ? this.pageTitle : this.pageTitle + ' - ' + this.companyTitle
-        console.log('dashboard')
         document.title = (this.$route.meta['title']) ? `${this.$route.meta['title']} | Kreazy Id` : `Kreazy Id`
     },
 }

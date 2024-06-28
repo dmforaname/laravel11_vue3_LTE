@@ -102,8 +102,7 @@ export default {
         addData() {
 
             this.v$.form.$touch
-            console.log("click add")
-            console.log("email : " + this.v$.form.email.$invalid)
+            // console.log("email : " + this.v$.form.email.$invalid)
 
             this.err.email = (this.v$.form.email.$invalid) ? "form-validation-red" : ""
 

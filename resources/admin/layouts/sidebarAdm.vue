@@ -184,7 +184,8 @@ export default {
                 logout: '/admin/logout',
                 blank: '/admin/sample'
             },
-            currentUrl:''
+            currentUrl:'',
+            baseUrl: import.meta.env.VITE_APP_URL
             
         };
     },
@@ -205,8 +206,8 @@ export default {
 
                 
                 this.$router.push(to).then(() => {
-                    // this.getCurUrl()
-                    this.loadJqueryModule(`http://localhost:8028${to}`)                    
+
+                    this.loadJqueryModule(this.baseUrl + to)                    
                 })                
             }
             
@@ -221,12 +222,12 @@ export default {
         },
         setActiveMenu(r) {
 
-            console.log('setActiveMenu : '+r)
+            // console.log('setActiveMenu : '+r)
             return 'active'
         },
         getCurUrl() {
             this.currentUrl = window.location.pathname;
-            console.log(`Current URL => ${this.currentUrl}`);
+            // console.log(`Current URL => ${this.currentUrl}`);
         },
         loadJqueryModule(x) {
 

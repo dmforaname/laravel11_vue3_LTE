@@ -54,8 +54,6 @@ router.beforeEach((to, from, next) => {
 
       let tokenPayload = script.parseJwt(localStorage.getItem('token'))
 
-      console.log(tokenPayload.exp * 1000)
-
       if (now > tokenPayload.exp * 1000) {
 
         const api_uri = import.meta.env.VITE_API_URL
@@ -75,7 +73,6 @@ router.beforeEach((to, from, next) => {
 
             f().then(i => {
 
-              console.log('then')
               localStorage.setItem("token_ttl", now + (day * 60 * 60 * 1000))
               return next()
             })
