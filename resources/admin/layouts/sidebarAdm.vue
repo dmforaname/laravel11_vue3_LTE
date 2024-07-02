@@ -185,7 +185,8 @@ export default {
                 blank: '/admin/sample'
             },
             currentUrl:'',
-            baseUrl: import.meta.env.VITE_APP_URL
+            baseUrl: import.meta.env.VITE_APP_URL,
+            api_uri : import.meta.env.VITE_API_URL
             
         };
     },

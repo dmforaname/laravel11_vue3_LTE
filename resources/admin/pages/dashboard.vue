@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 
 export default {
 
@@ -46,8 +47,24 @@ export default {
 
     mounted() {
 
+        // console.log(JSON.stringify(this.user))
+
+        console.log('dashboard')
+        // console.log(this.printUser())
         // document.title = (this.companyTitle === '') ? this.pageTitle : this.pageTitle + ' - ' + this.companyTitle
         document.title = (this.$route.meta['title']) ? `${this.$route.meta['title']} | Kreazy Id` : `Kreazy Id`
+    },
+    computed: {
+        ...mapState(['user']),
+
+        
+    },
+    methods: {
+
+        printUser() {
+
+            return this.user
+        }
     },
 }
 

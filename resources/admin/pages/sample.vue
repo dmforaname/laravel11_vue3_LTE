@@ -25,6 +25,8 @@
 
 <script>
 
+import { mapState } from 'vuex'
+
 export default {
 
     data() {
@@ -39,9 +41,18 @@ export default {
 
     mounted() {
 
+        // console.log(this.isUser)
         // document.title = (this.companyTitle === '') ? this.pageTitle : this.pageTitle + ' - ' + this.companyTitle
         document.title = (this.$route.meta['title']) ? `${this.$route.meta['title']} | Kreazy Id` : `Kreazy Id`
     },
+    computed: {
+        ...mapState(['user']),
+
+        isUser() {
+            
+            return this.user
+        }
+    }
 }
 
 </script>

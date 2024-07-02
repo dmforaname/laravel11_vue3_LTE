@@ -53,6 +53,7 @@ export default {
   mounted() {
     // document.title = (this.companyTitle === '') ? this.pageTitle : this.pageTitle + ' - ' + this.companyTitle
     console.log("App Mounted");
+    
   },
 }
 </script>
