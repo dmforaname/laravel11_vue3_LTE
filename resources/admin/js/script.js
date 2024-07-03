@@ -25,7 +25,10 @@ const parseJwt = ((token) => {
     return JSON.parse(jsonPayload);
 })
 
-const refreshToken = (() => {
+const refreshToken = ((day) => {
+
+    const api_uri = import.meta.env.VITE_API_URL
+    const now = new Date().getTime()
 
     axios.get(`${api_uri}/refresh`)
         .then(res => {
@@ -42,15 +45,12 @@ const refreshToken = (() => {
 
                 localStorage.setItem("token_ttl", now + (day * 60 * 60 * 1000))
                 if (!store.getters.getUserLoaded) store.dispatch('getUserInfo')
-
-                return next()
             })
+
+            return true
 
         }).catch(err => {
             console.log("err===========", err)
-
-            arrStorageList().forEach(item => localStorage.removeItem(item))
-            localStorage.clear();
             goToLogout()
             // return;
         })

@@ -26,8 +26,8 @@ router.beforeEach((to, from, next) => {
 
     // store vuex data
     store.commit('login', to.query)
-    store.commit('setUserLoaded', true)
-    store.dispatch('getUserInfo')
+    // store.commit('setUserLoaded', true)
+    // store.dispatch('getUserInfo')
     return next({ path: (to.query.url) ?? '/admin' })
   }
 
@@ -55,14 +55,54 @@ router.beforeEach((to, from, next) => {
         // axios set header
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
 
-        script.refreshToken()
+        axios.get(`${api_uri}/refresh`)
+        .then(res => {
+
+          async function f() {
+              let newRes = res.data.data
+              localStorage.setItem('token', newRes['token'])
+              axios.defaults.headers.common['Authorization'] = 'Bearer ' + newRes['token']
+              return true
+          }
+
+          f().then(i => {
+            
+            localStorage.setItem("token_ttl", now + (day * 60 * 60 * 1000))
+            if (!store.getters.getUserLoaded) {
+              (async () => {
+                let res = await store.dispatch('getUserInfo')
+                console.log("err===========", res)
+                return next()
+              })()
+            }
+
+            // if (!store.getters.getUserLoaded) store.dispatch('getUserInfo')
+            // return next()
+          })
+
+        }).catch(err => {
+            console.log("err===========", err)
+            script.goToLogout()
+            return;
+        })
         
       } else {
 
           axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
           localStorage.setItem("token_ttl", now + (day * 24 * 60 * 60 * 1000))
-          if ((!store.getters.getUserLoaded)) store.dispatch('getUserInfo')
-          return next()
+          if (!store.getters.getUserLoaded) {
+
+            (async()=>{
+                let res = await store.dispatch('getUserInfo') 
+                console.log('>>>>>>>>>>> abc', JSON.stringify(res));
+
+                // store.commit('setUserLoaded', true)
+                // store.commit('setLoginProcess',true)
+                // store.commit('setUser', res.data.data)
+                return next()
+
+            })()
+          }
       }
 
     }

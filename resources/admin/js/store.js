@@ -43,34 +43,58 @@ const store = createStore({
 
     },
     actions: {  
-        getUserInfo(context){ console.log('store_getUserInfo')
+        async getUserInfo(context){ 
 
             const api_uri = import.meta.env.VITE_API_URL
 
-            axios.get(`${api_uri}/auth/users`)
-            .then(res => {
-                // resolve(res)
+            try {
+                
+                let res = await axios.get(`${api_uri}/auth/users`);
+
+                console.log('=====',res.data.data.user)
 
                 context.commit('setUserLoaded', true)
-                context.commit('setLoginProcess',false)
-                context.commit('setUser', res.data)
+                context.commit('setLoginProcess',true)
+                // context.commit('setUser', res.data)
+                context.commit('setUser', res.data.data.user)
 
-            }).catch(err=> {
-                // reject(err)
-                // document.cookie = 'sso_token=; Max-Age=-99999999;';
-                // localStorage.removeItem('userInfo');
-                console.log("err===========", err)
-                // this.auth = false;
-                // localStorage.removeItem('token');
-                // localStorage.removeItem('token_ttl');
-                // localStorage.clear();
-                // delete axios.defaults.headers.common['Authorization'];
-                // document.getElementById("logoutform").submit();
-                // this.storageList.forEach(item => localStorage.removeItem(item))
-                // localStorage.clear();
+                return res;
+
+            } catch (error) {
                 script.goToLogout()
-                return;
-            })
+            }
+
+            // let json = await axios.get(`${api_uri}/auth/users`);
+            // console.log('after the call to service');
+            
+            
+
+            // axios.get(`${api_uri}/auth/users`)
+            // .then(res => {
+            //     // resolve(res)
+
+            //     context.commit('setUserLoaded', true)
+            //     context.commit('setLoginProcess',true)
+            //     context.commit('setUser', res.data)
+
+            //     return true
+
+            // }).catch(err=> {
+            //     // reject(err)
+            //     // document.cookie = 'sso_token=; Max-Age=-99999999;';
+            //     // localStorage.removeItem('userInfo');
+            //     console.log("err===========", err)
+            //     // this.auth = false;
+            //     // localStorage.removeItem('token');
+            //     // localStorage.removeItem('token_ttl');
+            //     // localStorage.clear();
+            //     // delete axios.defaults.headers.common['Authorization'];
+            //     // document.getElementById("logoutform").submit();
+            //     // this.storageList.forEach(item => localStorage.removeItem(item))
+            //     // localStorage.clear();
+            //     script.goToLogout()
+            //     return;
+            // })
         }
     },
     getters: {

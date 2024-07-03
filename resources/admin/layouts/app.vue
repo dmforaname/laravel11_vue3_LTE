@@ -35,6 +35,7 @@ import NavbarAdm from './navbarAdm.vue';
 import FooterAdm from './footerAdm.vue';
 import PreloaderAdm from './preloaderAdm.vue';
 import BreadcrumbAdm from './breadcrumbAdm.vue'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -48,6 +49,7 @@ export default {
     return {
       // pageTitle: 'Dashboard',
       // companyTitle : '',
+      userData : {}
     };
   },
   mounted() {
@@ -55,5 +57,12 @@ export default {
     console.log("App Mounted");
     
   },
+  computed: {
+      
+  },
+  methods: { 
+
+
+  }
 }
 </script>

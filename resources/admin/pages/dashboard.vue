@@ -1,5 +1,5 @@
 <template>
-    <section class="content">
+    <section class="content" v-if="isAdmin">
 
         <!-- Default box -->
         <div class="card">
@@ -55,9 +55,17 @@ export default {
         document.title = (this.$route.meta['title']) ? `${this.$route.meta['title']} | Kreazy Id` : `Kreazy Id`
     },
     computed: {
-        ...mapState(['user']),
+        ...mapState(['user', 'userLoaded']),
 
-        
+        isAdmin(){
+
+            // console.log(JSON.stringify(this.user))
+
+            const roles = ["superAdmin","admin"]
+            const intersection = this.user.roles.filter(element => roles.includes(element))
+
+            return (intersection.length > 0)??false
+        }
     },
     methods: {
 
