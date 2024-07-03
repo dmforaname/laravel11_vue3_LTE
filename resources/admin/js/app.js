@@ -71,9 +71,10 @@ router.beforeEach((to, from, next) => {
             if (!store.getters.getUserLoaded) {
               (async () => {
                 let res = await store.dispatch('getUserInfo')
-                console.log("err===========", res)
                 return next()
               })()
+            }else{
+              return next()
             }
 
             // if (!store.getters.getUserLoaded) store.dispatch('getUserInfo')
@@ -94,14 +95,12 @@ router.beforeEach((to, from, next) => {
 
             (async()=>{
                 let res = await store.dispatch('getUserInfo') 
-                console.log('>>>>>>>>>>> abc', JSON.stringify(res));
-
-                // store.commit('setUserLoaded', true)
-                // store.commit('setLoginProcess',true)
-                // store.commit('setUser', res.data.data)
                 return next()
 
             })()
+
+          }else{
+            return next()
           }
       }
 
