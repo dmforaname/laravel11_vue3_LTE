@@ -12,6 +12,7 @@ const store = createStore({
         userLoaded: false,
         keep_login: false,
         loginProcess: false,
+        userName: ''
 
     },
     mutations : { 
@@ -39,6 +40,9 @@ const store = createStore({
         setLoginProcess(state,bool) {
 
             state.loginProcess = bool
+        },
+        setUserName(state,str) {
+            state.userName = str
         }
 
     },
@@ -51,12 +55,15 @@ const store = createStore({
                 
                 let res = await axios.get(`${api_uri}/auth/users`);
 
-                // console.log('=====',res.data.data.user)
+                console.log('=====',res.data.data.user.name)
 
                 context.commit('setUserLoaded', true)
                 context.commit('setLoginProcess',true)
                 // context.commit('setUser', res.data)
                 context.commit('setUser', res.data.data.user)
+                context.commit('setUserName',res.data.data.user.name)
+
+                
 
                 return res;
 

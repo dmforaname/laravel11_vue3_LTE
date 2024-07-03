@@ -29,7 +29,7 @@
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                                 <img src="../assets/img/user3-128x128.jpg" class="user-image-1 img-circle elevation-2"
                                     alt="User Image">
-                                <span class="hidden-xs">Diaz Mahendra</span>
+                                <span class="hidden-xs">{{ $store.state.userName }}</span>
                             </a>
                             <!-- <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> <img src="../assets/img/user3-128x128.jpg" class="user-image rounded-circle shadow" alt="User Image"> <span class="d-none d-md-inline">Alexander Pierce</span> </a> -->
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
