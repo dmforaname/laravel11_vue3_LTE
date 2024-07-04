@@ -32,7 +32,9 @@ router.beforeEach((to, from, next) => {
   }
 
   // if apps dont have login expired time
-  if (!localStorage.getItem('token_ttl')) script.goToLogout();
+  if (!localStorage.getItem('token_ttl')) {
+    script.goToLogout(to.path);
+  }
 
   // Check login time expired
   if (localStorage.getItem('token_ttl')) {
@@ -42,7 +44,7 @@ router.beforeEach((to, from, next) => {
     // check if login expired time is valid
     if (now > localStorage.getItem('token_ttl')) {
 
-      script.goToLogout();
+      script.goToLogout(to.path);
 
     } else {
 

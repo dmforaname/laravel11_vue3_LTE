@@ -55,7 +55,7 @@ const store = createStore({
                 
                 let res = await axios.get(`${api_uri}/auth/users`);
 
-                console.log('=====',res.data.data.user.name)
+                // console.log('=====',res.data.data.user.name)
 
                 context.commit('setUserLoaded', true)
                 context.commit('setLoginProcess',true)

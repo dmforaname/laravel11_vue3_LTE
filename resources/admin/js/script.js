@@ -1,16 +1,32 @@
 'use strict';
 
 import store from './store';
+import CryptoJS from 'crypto-js';
 
-const goToLogout = (() => {
+const encryptText = ((str) => {
+    const key = import.meta.env.VITE_CRYPTO_KEY; 
+    // return CryptoJS.AES.encrypt(str, key).toString();
+
+    let b64 = CryptoJS.AES.encrypt(str, key).toString();
+    let e64 = CryptoJS.enc.Base64.parse(b64);
+    return e64.toString(CryptoJS.enc.Hex);
+})
+
+const goToLogout = ((to) => {
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
 
     arrStorageList().forEach(item => localStorage.removeItem(item))
     localStorage.clear();
 
+    let newTo
+    if (to) newTo = encryptText(to) 
+    
+    let toUrl = (to) ? `/login?url=${newTo}` : '/login'
+
     return axios.post('/api/logout')
-        .then(() => location.href = '/login').catch(err => {
-            location.href = '/login'
+        .then(() => location.href = toUrl).catch(err => {
+
+            location.href = toUrl
         })
 })
 
@@ -69,7 +85,8 @@ const func = {
     goToLogout,
     parseJwt,
     refreshToken,
-    arrStorageList
+    arrStorageList,
+    encryptText
 }
 
 export default func

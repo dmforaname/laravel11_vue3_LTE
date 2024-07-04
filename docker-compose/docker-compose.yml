@@ -73,6 +73,7 @@ services:
       - JWT_TTL=10080
       - JWT_REFRESH_TTL=43200
       - AUTH_GUARD=api
+      - VITE_CRYPTO_KEY=12345
     volumes:
       - ../:/var/www/html/:cached
     networks:

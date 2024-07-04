@@ -12,7 +12,8 @@
                     </label>
                     <input :class="this.err.email" type="email" class="form-control" name="email" id="email"
                         placeholder="name@example.com" v-model="v$.form.email.$model" required @input="inputFormEmail()"
-                        autofocus>
+                        autofocus
+                        :readonly="formIsReadOnly">
                 </div>
 
                 <div class="form-group">
@@ -23,7 +24,7 @@
                         </a> -->
                     </label>
                     <input :class="this.err.password" type="password" class="form-control" name="password" id="password" value=""
-                        v-model="v$.form.password.$model" data-eye>
+                        v-model="v$.form.password.$model" data-eye :readonly="formIsReadOnly">
                 </div>
 
                 <div class="form-group">
@@ -40,9 +41,13 @@
                     </div>
                 </div>
 
-                <div class="form-group m-0">
+                <div class="form-group m-0" v-if="hideButtonLogin===false">
                     <button class="btn bsb-btn-xl btn-primary"  type="button" @click="addData()">Login</button>
                 </div>
+                <div class="spinner-border text-primary" style="margin-left: 3%;" role="status"  v-if="hideButtonLogin===true">
+                    <span class="sr-only">Loading...</span>
+                </div>
+
                 <!-- <div class="mt-4 text-center">
                     Don't have an account? <a href="register.html">Create One</a>
                 </div> -->
@@ -55,6 +60,7 @@
 <script>
 import { useVuelidate } from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
+import script from '../js/script'
 
 export default {
     setup() {
@@ -77,7 +83,9 @@ export default {
             formAlert:false,
             invalidEmail:false,
             invalidPassword:false,
-            api_uri : import.meta.env.VITE_API_URL
+            api_uri : import.meta.env.VITE_API_URL,
+            hideButtonLogin:false,
+            formIsReadOnly:false
         };
     },
     validations() {
@@ -101,6 +109,8 @@ export default {
     methods: {
         addData() {
 
+            this.invalidEmail = false
+            this.invalidPassword = false
             this.v$.form.$touch
             // console.log("email : " + this.v$.form.email.$invalid)
 
@@ -122,6 +132,8 @@ export default {
             let password = this.form.password
             let remember_me = this.form.remember_me
 
+            this.hideButtonLogin = true
+            this.formIsReadOnly = true
             axios.post(this.api_uri + '/login', {
 
                 email: email,
@@ -130,8 +142,13 @@ export default {
             }).then(res => {
 
                 let auth = res.data.data
-
-                window.location.href = `/loggedin?token=${auth['token']}&token_ttl=${auth['token_ttl']}&keep_login=${auth['keep_login']}`
+                let redirectUrl = `/loggedin?token=${auth['token']}&token_ttl=${auth['token_ttl']}&keep_login=${auth['keep_login']}`
+                
+                if (this.$route.query.url) {                   
+                    if (script.decryptText(this.$route.query.url) !== "") redirectUrl += `&url=${script.decryptText(this.$route.query.url)}` 
+                }
+                    
+                window.location.href = redirectUrl
 
             }).catch(err => {
 
@@ -139,6 +156,8 @@ export default {
                 // let codeErr = err.response.status
                 // let newErr = (codeErr === 422) ? err.response.data.errors : err.response.data
                 // console.log(newErr)
+                this.hideButtonLogin = false
+                this.formIsReadOnly = false
             })
 
             this.v$.form.$reset()

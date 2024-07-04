@@ -106,15 +106,43 @@ export default {
             },
             currentUrl:'',
             baseUrl: import.meta.env.VITE_APP_URL,
-            api_uri : import.meta.env.VITE_API_URL
+            api_uri : import.meta.env.VITE_API_URL,
+            mountedTimeOut : 3500
             
         };
     },
     mounted() {
-        
-        this.loadJqueryModule(window.location.href)
 
-        this.getCurUrl()
+        // setTimeout(() => {
+        
+        //     this.loadJqueryModule(window.location.href)
+        //     this.getCurUrl()
+        // }, 2000)
+
+        // console.log("this.userLoaded : ",this.userLoaded)
+
+        if (!this.userLoaded) {
+
+            // console.log("userLoaded")
+
+            setTimeout(() => {
+
+                // console.log("userLoaded TimeOut")
+            
+                this.loadJqueryModule(window.location.href)
+                this.getCurUrl()
+            }, this.mountedTimeOut)
+        }
+
+        // this.$nextTick(function () {
+        //     console.log('nextTick')
+        //     // Code that will run only after the
+        //     // entire view has been rendered
+        //     this.loadJqueryModule(window.location.href)
+        //     this.getCurUrl()
+        // })
+        
+        
         document.title = 'Dashboard | KreazyId'
     },
     methods: {
@@ -176,18 +204,20 @@ export default {
     computed: {
         ...mapState(['user', 'userLoaded']),
         
-        checkIsLoaded() {
+        // checkIsLoaded() {
 
-            if (this.userLoaded) {
+        //     if (this.userLoaded) {
 
-                this.loadJqueryModule(window.location.href)
-                this.getCurUrl()
+        //         console.log('userLoaded')
 
-                return true
-            }
+        //         this.loadJqueryModule(window.location.href)
+        //         this.getCurUrl()
 
-            return false            
-        }
+        //         return true
+        //     }
+
+        //     return false            
+        // }
     
     }
 }
