@@ -13,7 +13,7 @@ $(function () {
     $('.main-header').removeClass('navbar-light');
     $('.main-header').removeClass('navbar-white');
 
-    // $('.nav-sidebar').addClass('nav-flat');
+    $('.nav-sidebar').addClass('nav-flat');
     $('.main-header').addClass('navbar-gray');
     $('.main-header').addClass('navbar-dark');
     // $('.main-header').addClass('border-bottom-0');
@@ -22,4 +22,5 @@ $(function () {
     // $('.brand-link').addClass('text-light');
     // $('.nav-sidebar').addClass('nav-child-indent');
     $('.nav-sidebar').addClass('nav-compact')
+    // $('.nav-sidebar').addClass('nav-legacy')
 });
