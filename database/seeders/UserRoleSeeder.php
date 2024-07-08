@@ -17,7 +17,7 @@ class UserRoleSeeder extends Seeder
     {
         $data = [
             [
-                'email' => 'admin@example.com',
+                'email' => 'dmforaname@gmail.com',
                 'role' => 'superAdmin',
             ],
             // [
@@ -29,6 +29,9 @@ class UserRoleSeeder extends Seeder
         foreach ($data as $item){
 
             $user = User::where('email',$item['email'])->first();
+            $user->getRoleNames();
+            $roles = collect($user->roles)->pluck('name')->toArray();
+            if (in_array($item['role'], $roles)) continue;
 
             $roleToAssign = Role::findByName($item['role']);
             $user->assignRole($roleToAssign);

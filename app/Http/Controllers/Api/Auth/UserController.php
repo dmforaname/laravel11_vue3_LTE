@@ -15,7 +15,8 @@ class UserController extends Controller
     public function __invoke()
     {
         $user = Auth::user();
-        $user->getRoleNames();
+        // $user->getRoleNames();
+        $user->getPermissionsViaRoles();
         $data = [
             'user' => UserResource::make($user)
         ];

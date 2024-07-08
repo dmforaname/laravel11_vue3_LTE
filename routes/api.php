@@ -14,11 +14,11 @@ Route::get('/refresh', Api\Auth\RefreshController::class);
 Route::post('/logout', Api\Auth\LogoutController::class);
 Route::get('/auth/users', Api\Auth\UserController::class)->middleware('auth:api');
 
-// Route::middleware(['auth:api'])->group(function () { 
+Route::middleware(['auth:api'])->group(function () { 
 
-//     Route::prefix('users')->name('UserApi.')->group(function () {
+    Route::prefix('users')->name('UserApi.')->group(function () {
 
-//         Route::resource('',Api\UserController::class)->only(['show'])
-//             ->parameters(['' => 'uuid']);
-//     });
-// });
+        Route::resource('',Api\UserController::class)->only(['show','store'])
+            ->parameters(['' => 'uuid']);
+    });
+});
