@@ -3,14 +3,28 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\UserStoreRequest;
 use App\Http\Resources\Api\Auth\UserResource;
+use App\Repositories\Api\UserRepository;
 use App\Traits\ApiResponser;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     use ApiResponser;
+
+    /**
+     * UserController constructor.
+     *
+     * @param  UserRepository  $user
+     */
+    public function __construct(private UserRepository $user)
+    {
+        //
+    }
+
 
     /**
      * Display a listing of the resource.
@@ -31,9 +45,14 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request):JsonResponse
     {
-        //
+
+        $data = $this->user->create($request->validated());
+
+        if ($data) return $this->success($request->validated(),'Create user success');
+
+        return $this->error('An Error Occured');
     }
 
     /**
