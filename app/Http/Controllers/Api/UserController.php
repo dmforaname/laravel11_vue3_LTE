@@ -4,12 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\UserStoreRequest;
-use App\Http\Resources\Api\Auth\UserResource;
 use App\Repositories\Api\UserRepository;
 use App\Traits\ApiResponser;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -50,7 +48,12 @@ class UserController extends Controller
 
         $data = $this->user->create($request->validated());
 
-        if ($data) return $this->success($request->validated(),'Create user success');
+        if ($data) {
+
+            $data = $this->user->setUserRole($request,$data);
+
+            return $this->success($data,'Create user success'); 
+        }
 
         return $this->error('An Error Occured');
     }

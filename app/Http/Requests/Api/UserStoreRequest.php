@@ -9,14 +9,18 @@ use Illuminate\Support\Facades\Log;
 class UserStoreRequest extends FormRequest
 {
     /**
+     * Indicates if the validator should stop on the first rule failure.
+     *
+     * @var bool
+     */
+    protected $stopOnFirstFailure = true;
+
+    /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-
-        Log::info("permission : ".Auth::user()->can('addUsers'));
-
-        return true;
+        return Auth::user()->can('addUsers');
     }
 
     /**
@@ -28,9 +32,10 @@ class UserStoreRequest extends FormRequest
     {
         return [
             
-            'name' => 'required|string|max:250',
-            'email' => 'required|string|email:rfc,dns|max:250|unique:users,email',
-            'password' => 'required|string|min:8|confirmed'
+            'name' => 'bail|required|string|max:250',
+            'email' => 'bail|required|string|email:rfc,dns|max:250|unique:users,email',
+            'password' => 'bail|required|string|min:8|confirmed',
+            'role' => 'bail|required|string|exists:roles,name'
         ];
     }
 }
