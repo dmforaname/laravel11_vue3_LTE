@@ -8,8 +8,10 @@ use App\Repositories\Api\UserRepository;
 use App\Traits\ApiResponser;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class UserController extends Controller
+class UserController extends Controller implements HasMiddleware
 {
     use ApiResponser;
 
@@ -23,13 +25,22 @@ class UserController extends Controller
         //
     }
 
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:viewUsers', only: ['index']),
+        ];
+    }
 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return $this->success([],"Success retrived users data");
     }
 
     /**

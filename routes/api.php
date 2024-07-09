@@ -18,7 +18,7 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::prefix('users')->name('UserApi.')->group(function () {
 
-        Route::resource('',Api\UserController::class)->only(['show','store'])
+        Route::resource('',Api\UserController::class)->only(['show','store','index'])
             ->parameters(['' => 'uuid']);
     });
 });
