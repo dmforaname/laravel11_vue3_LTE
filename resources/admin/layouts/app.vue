@@ -21,6 +21,14 @@
   <!-- /.content-wrapper -->
 
   <FooterAdm></FooterAdm>
+  <!-- Loader -->
+  <div id="overlay" class="custom-spinner">
+    <div class="cv-spinner">
+      <span class="spinner"></span>
+      <!--<img class="animation__shake" src="/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">-->
+    </div>
+  </div>
+  <!-- ./Loader -->
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -55,6 +63,7 @@ export default {
   mounted() {
     // document.title = (this.companyTitle === '') ? this.pageTitle : this.pageTitle + ' - ' + this.companyTitle
     console.log("App Mounted");
+    $("#overlay").fadeIn()
     
   },
   computed: {

@@ -41,6 +41,13 @@ export default {
 
     mounted() {
 
+        $("#overlay").fadeIn()
+
+        this.$nextTick(function () {
+            // Code that will run only after the
+            // entire view has been rendered
+            $("#overlay").fadeOut()
+        })
         // console.log(this.isUser)
         // document.title = (this.companyTitle === '') ? this.pageTitle : this.pageTitle + ' - ' + this.companyTitle
         document.title = (this.$route.meta['title']) ? `${this.$route.meta['title']} | Kreazy Id` : `Kreazy Id`

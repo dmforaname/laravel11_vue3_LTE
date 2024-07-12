@@ -81,6 +81,7 @@ export default {
 
             this.arrLocalStorage.forEach(item => localStorage.removeItem(item))
             localStorage.clear();
+            $("#overlay").fadeIn()
             axios.post(`${this.api_uri}/logout`).then(() => location.href = '/login').catch(err => {
                 location.href = '/login'
             })
