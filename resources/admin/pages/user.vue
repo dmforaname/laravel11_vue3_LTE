@@ -71,7 +71,7 @@ export default {
             ajaxTable : {
                 url : '/api/users',
                 headers :{
-                    'Authorization': 'Bearer '+localStorage.getItem('token'),
+                    'Authorization': axios.defaults.headers.common['Authorization'],
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             }
