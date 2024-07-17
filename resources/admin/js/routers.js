@@ -1,36 +1,53 @@
 import { createRouter } from 'vue-router'
-import dashboardComponent from '../pages/dashboard.vue' 
-import loggedinComponent from '../pages/loggedin.vue'
-import sampleComponent from '../pages/sample.vue'
+import dashboardPage from '../pages/dashboard.vue' 
+import loggedinPage from '../pages/loggedin.vue'
+import samplePage from '../pages/sample.vue'
+import userPage from '../pages/user.vue'
+
+// function checkTokenTTL(to,from) {
+//   if (!localStorage.getItem('token_ttl')) return false
+// }
+const siteName = import.meta.env.VITE_APP_NAME
 
 const routes = [
     {
       path: '/admin',
-      component: dashboardComponent,
+      component: dashboardPage,
       name: 'Dashboard',
       alias: '/admin/dashboard',
       meta: {
             
-        title : 'Dashboard'
-      }
+        title : `Dashboard | ${siteName}`
+      },
+      // beforeEnter: [checkTokenTTL],
     },
     {
       path: '/loggedin',
-      component: loggedinComponent,
+      component: loggedinPage,
       name: 'Loggedin',
       meta: {
             
-        title : 'Loggedin'
+        title : `Loggedin | ${siteName}`
       }
     },
     {
       path: '/admin/sample',
-      component: sampleComponent,
+      component: samplePage,
       name: 'Sample',
       meta: {
             
-        title : 'Sample Page'
-      }
+        title : `Sample | ${siteName}`
+      },
+      // beforeEnter: [checkTokenTTL],
+    },
+    {
+      path: '/admin/users',
+      component: userPage,
+      name: 'User Manager',
+      meta: {
+            
+        title : `Users | ${siteName}`
+      },
     },
   ]
 

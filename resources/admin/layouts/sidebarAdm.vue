@@ -48,11 +48,26 @@
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>Dashboard</p>
                         </a>
-                        <!-- <a href="#" class="nav-link">
-                    
-                    </a> -->
+                        <!-- <a href="#" class="nav-link"> </a> -->
 
                     </li>
+
+                    <li class="nav-item">
+                        <a 
+                        @click.prevent="goto(routes.users)" 
+                        class="nav-link" 
+                        aria-current="page" 
+                        :href="routes.users"
+                        >
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>Users</p>
+                        </a>
+                        <!-- <a href="#" class="nav-link"> </a> -->
+
+                    </li>
+
+                    
+
                     
                     <li class="nav-header">EXAMPLES</li>
 
@@ -80,7 +95,9 @@
                         </ul>
                     </li>
                     
+                    
                 </ul>
+                
             </nav>
             <!-- /.sidebar-menu -->
         </div>
@@ -102,7 +119,8 @@ export default {
             routes: {
                 index: '/admin',
                 logout: '/admin/logout',
-                blank: '/admin/sample'
+                blank: '/admin/sample',
+                users: '/admin/users'
             },
             currentUrl:'',
             baseUrl: import.meta.env.VITE_APP_URL,

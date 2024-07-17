@@ -40,6 +40,11 @@ class UserController extends Controller implements HasMiddleware
      */
     public function index()
     {
+        if (request()->ajax()) {
+
+            return $this->user->getDatatableList();
+        }
+
         return $this->success([],"Success retrived users data");
     }
 

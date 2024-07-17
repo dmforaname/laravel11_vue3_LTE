@@ -6,12 +6,15 @@ import App from '../layouts/app.vue';
 import store from './store';
 import script from './script'
 import mitt from 'mitt';
-
+import DataTable from 'datatables.net-vue3'
+import DataTablesLib from 'datatables.net';
 
 const emitter = mitt();
 const router = createRouter(createWebHistory())
 const arrStorageList = script.arrStorageList()
 const api_uri = import.meta.env.VITE_API_URL
+
+DataTable.use(DataTablesLib);
 
 router.beforeEach((to, from, next) => {
 
@@ -115,6 +118,7 @@ router.beforeEach((to, from, next) => {
 })
 
 const app = createApp(App)
+app.component('DataTable', DataTable)
 app.use(store)
 app.use(router)
 

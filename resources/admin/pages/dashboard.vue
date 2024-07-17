@@ -59,7 +59,7 @@ export default {
             $("#overlay").fadeOut()
         })
         // document.title = (this.companyTitle === '') ? this.pageTitle : this.pageTitle + ' - ' + this.companyTitle
-        document.title = (this.$route.meta['title']) ? `${this.$route.meta['title']} | Kreazy Id` : `Kreazy Id`
+        document.title =  this.$route.meta['title'] ?? `Kreazy Id`
     },
     computed: {
         ...mapState(['user', 'userLoaded']),

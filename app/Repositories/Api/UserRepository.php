@@ -5,6 +5,7 @@ namespace App\Repositories\Api;
 use App\Models\User;
 use App\Repositories\BaseRepository;
 use Spatie\Permission\Models\Role;
+use DataTables;
 
 /**
  * Class UserRepository
@@ -30,5 +31,25 @@ class UserRepository extends BaseRepository
         $user->assignRole($roleToAssign);
 
         return $user;
+    }
+
+    public function getUserWithRole()
+    {
+        return $this->model->with('roles')->latest()->get()
+            ->makeHidden(['id','created_at','updated_at','email_verified_at']);
+    }
+
+    public function getDatatableList()
+    {
+        return Datatables::of(self::getUserWithRole())
+            ->addIndexColumn()
+            ->addColumn('roles', function($data) {
+
+                return $data->roles->first()->name;
+            })
+            ->setRowClass(function ($data) {
+                return "clickRow";
+            })
+            ->make(true);
     }
 }
