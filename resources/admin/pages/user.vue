@@ -1,11 +1,9 @@
 <template>
     <section class="content">
-
         <!-- Default box -->
-        <div class="card">
+        <div class="card" v-if="userLoaded">
             <div class="card-header">
                 <h3 class="card-title">{{ tableTitle }}</h3>
-
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                         <i class="fas fa-minus"></i>
@@ -33,19 +31,16 @@
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
-
     </section>
     <!-- /.content -->
 </template>
 
 <script>
-
 import { mapState } from 'vuex'
 
 export default {
 
     data() {
-
         return {
 
             tableTitle: "Users List",
@@ -65,7 +60,6 @@ export default {
                     info: true,
                     autoWidth: false,
                     responsive: true,
-                    processing: true,
                     serverSide: true,
                 },
             ajaxTable : {
@@ -88,12 +82,12 @@ export default {
         
     },
     computed: {
-        ...mapState(['user']),
+        ...mapState(['user','userLoaded']),
 
-        isUser() {
+        // isUser() {
 
-            return this.user
-        }
+        //     return this.user
+        // }
     }
 }
 
