@@ -21,4 +21,6 @@ Route::middleware(['auth:api'])->group(function () {
         Route::resource('',Api\UserController::class)->only(['show','store','index'])
             ->parameters(['' => 'uuid']);
     });
+
+    Route::resource('roles',Api\RoleController::class)->only(['index']);
 });
