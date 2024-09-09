@@ -8,6 +8,7 @@ import script from './script'
 import mitt from 'mitt';
 import DataTable from 'datatables.net-vue3'
 import DataTablesLib from 'datatables.net';
+import i18n from '../i18n'
 
 const emitter = mitt();
 const router = createRouter(createWebHistory())
@@ -119,6 +120,7 @@ router.beforeEach((to, from, next) => {
 
 const app = createApp(App)
 app.component('DataTable', DataTable)
+app.use(i18n)
 app.use(store)
 app.use(router)
 

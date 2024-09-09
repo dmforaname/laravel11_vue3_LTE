@@ -32,7 +32,7 @@ class UserStoreRequest extends FormRequest
     {
         return [
             
-            'name' => 'bail|required|string|max:250',
+            'name' => 'bail|required|string|max:250|min:2',
             'email' => 'bail|required|string|email:rfc,dns|max:250|unique:users,email',
             'password' => 'bail|required|string|min:8|confirmed',
             'role' => 'bail|required|string|exists:roles,name'

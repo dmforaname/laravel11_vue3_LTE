@@ -13,8 +13,11 @@
                 <form method="POST" enctype="multipart/form-data" id="formInsert" action="javascript:void(0)"> 
                     <div class="form-group col-12">
                         <div class="row">
-                            <formName cols="4"/>
-                            <FormEmail cols="4" />
+                            <FormName cols="4" 
+                            ref="nameForm" 
+                            v-model="v$.form.name.$model"
+                            />
+                            <FormEmail cols="4"/>
                             <FormRole cols="4"/>
                         </div>
                         <div class="row">
@@ -68,20 +71,25 @@
 
 <script>
 import { mapState } from 'vuex'
-import formName from '../components/Forms/formName.vue'
+import FormName from '../components/Forms/formName.vue'
 import FormPassword from '../components/Forms/formPassword.vue'
 import FormRole from '../components/Forms/formRole.vue'
 import FormEmail from '../components/Forms/formEmail.vue'
 import FormPasswordConfirm from '../components/Forms/formPasswordConfirm.vue'
+import { useVuelidate } from '@vuelidate/core'
+import { required, email , minLength} from '@vuelidate/validators'
 
 export default {
     components:{
-    formName,
-    FormPassword,
-    FormRole,
-    FormEmail,
-    FormPasswordConfirm
-},
+        FormName,
+        FormPassword,
+        FormRole,
+        FormEmail,
+        FormPasswordConfirm
+    },
+    setup() {
+        return { v$: useVuelidate() }
+    },
     data() {
         return {
 
@@ -112,10 +120,23 @@ export default {
                     'Authorization': axios.defaults.headers.common['Authorization'],
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            }
+            },
+            form : {
+                name : ''
+            },
+            nameMinLength: 3
         }
     },
-
+    validations() {
+        return {
+            form: {
+                name: {
+                    required,
+                    minLength: minLength(this.nameMinLength)
+                },
+            },
+        }
+    },
     mounted() {
 
         $("#overlay").fadeIn()
@@ -123,7 +144,6 @@ export default {
         this.$nextTick(() => {
             $("#overlay").fadeOut()
         })
-        
     },
     computed: {
         ...mapState(['user','userLoaded']),
@@ -136,9 +156,11 @@ export default {
     methods: { 
 
         addData() {
-
-            console.log('add Data')
-        }
+            if (this.v$.form.name.$invalid) {
+                if (this.v$.form.name.required.$invalid) this.$refs.nameForm.setError(this.$tc('formErr.required', { x : 'Name' }))
+                if (this.v$.form.name.minLength.$invalid) this.$refs.nameForm.setError(this.$tc('formErr.min', { x : this.nameMinLength }))
+            } 
+        },
     }
 }
 

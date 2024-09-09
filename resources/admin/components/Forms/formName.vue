@@ -1,47 +1,68 @@
 <template>
     <div class="form-group" :class="setCols(this.cols)">
-        <label>{{ setFormTitle(this.title) }}</label>
-        <input type="text" class="form-control" :id="this.formName" :name="this.formName" :value="setValue(this.value)" :placeholder="setPlaceholder(this.placeholder)" required minlength="2">
-        <small class="text-danger"></small>
+        <label>{{label}}<span class="formRequired">{{formRequired}}</span></label>
+        <input 
+        :type="type" 
+        class="form-control" 
+        :placeholder="placeholder" 
+        @input="$emit('update:modelValue', $event.target.value)"
+        >
+        <small class="text-danger">{{formAlert}}</small>
     </div>
 </template>
 
 <script>
 export default {
 
-    props: [
-        'cols',
-        'placeholder',
-        'value',
-        'title'
-    ],
-    data() {
-        return {
-            formTitle : "Name",
-            formPlaceholder : "Enter Name",
-            formValue : "",
-            formName : "name"
+    props: {
+        cols : {
+            type : String,
+            default: '6'
+        },
+        placeholder : {
+            type : String,
+            default: 'Enter Name'
+        },
+        label : {
+            type : String,
+            default: 'Name'
+        },
+        isRequired : {
+            type : Boolean,
+            default : true
+        },
+        modelValue : {
+            type : String,
+            default : ''
+        },
+        type : {
+            type : String,
+            default : "text"
         }
     },
-    setup(props) {
-
-        // console.log(props.cols)
+    data() {
+        return {
+            formRequired : "*",
+            formAlert : ''
+        }
+    },
+    setup() {
+        
     },
     methods: {
         setCols(i) {
             if (i) return `col-${i}`
             return "col-6"
         },
-        setPlaceholder(s) {
-            return s ?? this.formPlaceholder
-        },
-        setValue(s) {
-            return s ?? this.formValue
-        },
-        setFormTitle(s) {
-            return s ?? this.formTitle
+        setError(str) {
+            // console.log('setError' ,i)
+            this.formAlert = str
         }
     },
+    mounted() {
+        
+        if (this.isRequired === false) this.formRequired = ""
+    }
 }
 
 </script>
