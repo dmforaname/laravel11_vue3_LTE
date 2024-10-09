@@ -2,10 +2,13 @@
     <div class="form-group" :class="setCols(this.cols)">
         <label>{{ label }} <span class="formRequired">{{ formRequired }}</span></label>
         <input 
+        v-bind="$attrs"
         type="text" 
         class="form-control" 
         :placeholder="placeholder" 
         @input="$emit('update:modelValue', $event.target.value)"
+        v-on:update:modelValue="myMethodForTheEvent"
+        :value="modelValue"
         >
         <small class="text-danger">{{ formAlert }}</small>
     </div>
@@ -47,18 +50,29 @@ export default {
         }
     },
 
-    setup() {
-        
+    setup(props) {
+        watch(() => props.modelValue, (newValue) => {
+            console.log(newValue)
+      })
     },
     methods: {
         setCols(i) {
             if (i) return `col-${i}`
             return "col-6"
+        },
+        myMethodForTheEvent() {
+            console.log('test')
         }
     },
     mounted() {
         
         if (this.isRequired === false) this.formRequired = ""
+    },
+    watch: {
+
+        modelValue: function(val) {
+            console.log('!!! model value changed ', val);
+        },
     }
 }
 
